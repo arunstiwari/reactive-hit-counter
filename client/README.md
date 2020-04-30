@@ -1,26 +1,53 @@
-### 1. npm i -D webpack
+### 1. 
+```bash
+   npm i -D webpack webpack-cli webpack-dev-server html-webpack-plugin
 
-### 2. npm i -D webpack-cli
+```
 
-### 3. npm i -D webpack-dev-server html-webpack-plugin
+### 2. create webpack.config.js. Add the following content
+```
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-### 4. create webpack.config.js
+module.exports = {
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './src/index.html'
+        })
+    ]
+}
+```
 
-### 5. Add the following content in it as shown in the file
+### 3. create src/index.html file with relevant contents
 
-### 6. create src/index.html file with relevant contents
+### 4. Modify the package.json to add the --config ./webpack.config.js argument
+```
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --mode development --config ./webpack.config.js --inline --hot"
+  },
+```
+### 5. npm start (look at the browser http://localhost:8080)
 
-### 7. Modify the package.json to add the --config ./webpack.config.js argument
+### 6. Install the babel compiler to support es6 
+```
+npm i -D babel-core babel-loader babel-preset-env
+```
 
-### 8. npm start (look at the browser http://localhost:8080)
+### 7. Add the babel configuration in the package.json by adding babel section
+```
+"babel": {
+    "presets": [
+      "env"
+    ]
+  },
+```
 
-### 9. npm i -D babel-core babel-loader babel-preset-env
+### 8. Install the socket.io-client dependency to support socket io client
+```
+npm i -D socket.io-client
+```
 
-### 10. Add the babel configuration in the package.json
-
-### 11. npm i -D socket.io-client
-
-### 12. Add the following code in index.js
+### 9. Add the following code in index.js
 ```
     import io from 'socket.io-client';
 
@@ -35,9 +62,9 @@
         console.log(hashId);
     }
 ```
-### 13. Start the server and client both, then go to the browser http://localhost:8080/#test1 and you should see in the console hashId getting printed
+### 10. Start the server and client both, then go to the browser http://localhost:8080/#test1 and you should see in the console hashId getting printed
 
-### 14. Now modify the index.js in the client code 
+### 11. Now modify the index.js in the client code 
 ```
 import io from 'socket.io-client';
 
@@ -53,7 +80,7 @@ socket.on('connect',()=> {
     
 });
 ```
-### 15. Modify the server.js code in the server directory
+### 12. Modify the server.js code in the server directory
 ```
     const io = require('socket.io')(9090);
 
@@ -63,11 +90,13 @@ socket.on('connect',()=> {
     })
 ```
 
-### 16. Now we will add the code to support redis
+### 13. Now we will add the code to support redis
 
-### 17. First install the redis in the server directory by npm i redis
-
-### 18. Add the following code to the server.js to support the redis 
+### 14. First install the redis in the server directory
+```
+   npm i redis
+```
+### 15. Add the following code to the server.js to support the redis 
 ```
 const io = require('socket.io')(9090);
 const redis = require('redis');
@@ -149,7 +178,7 @@ socket.on('connect',()=> {
 
 ```
 
---- Modify the index.html file
+Modify the index.html file
 ```html
 <body>
     <h1>This link has been clicked <span id="hitCount">0</span> times</h1>
