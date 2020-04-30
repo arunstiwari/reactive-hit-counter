@@ -1,4 +1,4 @@
-### 1. 
+### 1. Add the following as Dev dependencies
 ```bash
    npm i -D webpack webpack-cli webpack-dev-server html-webpack-plugin
 
