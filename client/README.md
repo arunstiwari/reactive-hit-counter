@@ -159,4 +159,17 @@ socket.on('connect',()=> {
 ### 25. Idea is to create a socket room, so modify the server.js code  
 ```
 
+io.on('connection', (socket) => {
+    console.log('client is connected');
+    
+    socket.on('hello', data => {
+        socket.join(data.hashId);
+        // console.log(data.hashId);
+        client.incr(data.hashId, (err, count) => {
+            io.to(data.hashId).emit('stats',count);
+            // console.log(count);
+            // socket.emit('stats',count);
+        })
+    });
+})
 ```
